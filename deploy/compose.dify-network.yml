@@ -1,0 +1,9 @@
+services:
+  api:
+    networks:
+      dify_backend:
+        aliases: [biaoshu-api]
+networks:
+  dify_backend:
+    external: true
+    name: ${BIAOSHU_DIFY_NETWORK:-biaoshu-dify}

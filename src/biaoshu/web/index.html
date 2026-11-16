@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>工程招投标工作台</title>
+  <link rel="stylesheet" href="/assets/styles.css">
+  <script defer src="/assets/app.js"></script>
+</head>
+<body>
+  <header><h1>工程招投标工作台</h1><span id="health" role="status">检查后端</span></header>
+  <main>
+    <section aria-labelledby="project-heading">
+      <h2 id="project-heading">项目与资料</h2>
+      <form id="connection" class="flow">
+        <label>访问令牌<input id="token" type="password" autocomplete="off" required></label>
+        <button type="submit">加载项目</button>
+      </form>
+      <label>当前项目<select id="project" aria-label="当前项目"><option value="">请选择项目</option></select></label>
+      <form id="new-project" class="flow">
+        <label>新项目名称<input name="project_name" maxlength="200" required></label>
+        <label>专业<input name="specialty" maxlength="100"></label>
+        <button type="submit">创建项目</button>
+      </form>
+      <form id="upload" class="flow">
+        <label>资料<input name="file" type="file" required></label>
+        <label>分类<select name="category"><option value="">按文件名识别</option><option value="tender">招标正文</option><option value="amendment">澄清补遗</option><option value="drawing">图纸</option><option value="boq">清单</option><option value="template">模板</option><option value="other">其他</option></select></label>
+        <button type="submit">上传并解析</button>
+      </form>
+    </section>
+    <section aria-labelledby="workflow-heading">
+      <h2 id="workflow-heading">编标工作流</h2>
+      <form id="run" class="flow">
+        <label>工作流<select name="workflow">
+          <option value="WF01">WF01 · 归档资料</option><option value="WF02">WF02 · 解析招标</option>
+          <option value="WF03">WF03 · 响应矩阵</option><option value="WF04">WF04 · 评分矩阵</option>
+          <option value="WF05">WF05 · 匹配企业资料</option><option value="WF06">WF06 · 生成技术章节</option>
+          <option value="WF09">WF09 · 审查</option><option value="WF10">WF10 · Word 组装</option>
+        </select></label>
+        <label class="wide">参数 JSON<textarea name="payload" rows="3">{}</textarea></label>
+        <button type="submit">执行</button>
+      </form>
+      <button class="secondary" id="show-plan" type="button">查看技术标目录</button>
+    </section>
+    <section aria-labelledby="review-heading">
+      <h2 id="review-heading">记录、复核与下载</h2>
+      <form id="inspect" class="flow">
+        <label>记录类型<select id="kind">
+          <option value="document">原始资料</option><option value="archive">项目档案</option><option value="analysis">解析报告</option>
+          <option value="requirement">要求矩阵</option><option value="score">评分矩阵</option><option value="match">企业资料匹配</option>
+          <option value="chapter">技术章节</option><option value="audit">审查报告</option><option value="artifact">导出文件</option>
+          <option value="approval">复核记录</option><option value="run">运行记录</option>
+        </select></label>
+        <label>编号<input id="key" value="latest" maxlength="120"></label>
+        <button type="submit">查看</button><button id="download" type="button" class="secondary">下载原件或成果</button>
+      </form>
+      <form id="review" class="flow">
+        <label>记录版本<input name="revision" type="number" min="1" required></label>
+        <label>复核结论<select name="decision"><option value="approve">通过</option><option value="reject">退回</option></select></label>
+        <label class="wide">复核意见<input name="note" maxlength="2500" required></label>
+        <label class="wide">冲突与证据确认 JSON<textarea name="resolutions" rows="3">{}</textarea></label>
+        <button type="submit">提交复核</button>
+      </form>
+    </section>
+    <section class="results" aria-labelledby="result-heading">
+      <h2 id="result-heading">执行结果</h2>
+      <p id="notice" role="status">可通过 Dify 或此工作台调用同一套流程。</p>
+      <pre id="result" aria-label="执行结果详情" tabindex="0"></pre>
+    </section>
+  </main>
+</body>
+</html>

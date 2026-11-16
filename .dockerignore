@@ -1,0 +1,11 @@
+.git
+.env
+.env.*
+.deps
+.venv
+data
+backup
+**/__pycache__
+tests
+doc
+workflows
